@@ -4,12 +4,8 @@ import {
   Form,
   Grid,
   Header,
-  Message,
   Segment,
-  GridColumn,
-  Container,
-  Dropdown,
-} from 'semantic-ui-react';
+    } from 'semantic-ui-react';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 class MainForm extends React.Component
@@ -28,13 +24,8 @@ class MainForm extends React.Component
     }
  render()
  {
-   return(
-    <Grid>
-      <Grid.Column>
-      <img src={require('./s.jpg') } width='30' height='70'></img>
-      </Grid.Column>
-     
-     <Grid centered Row={9} >
+   return(      
+     <Grid centered  >
        <Header as= "h1" >
         </Header>
         <Header as= "h1" color="blue" textAlign="center">
@@ -45,15 +36,12 @@ class MainForm extends React.Component
           <Form>
             <Button onClick={this.showLoginBox.bind(this)}>Login</Button>
             <Button onClick={this.showRegisterBox.bind(this)}>Register</Button>
-
           </Form>
         </Segment>
        </Grid.Row>
        {this.state.isLoginOpen && <LoginForm/>}
        {this.state.isRegisterOpen && <RegisterForm/>}
-      </Grid>
-    </Grid> 
-
+    </Grid>
   );
  }
 }
