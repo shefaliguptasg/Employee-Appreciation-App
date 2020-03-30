@@ -1,4 +1,9 @@
 import React from 'react';
+import{Router, Route, Link, browserHistory, IndexRoute}    from 'react-router-dom'
+import MainUserForm from './MainUserForm';
+import RegisterForm from './RegisterForm' ;
+import history from './history';
+
 import {
   Button,
   Form,
@@ -7,10 +12,8 @@ import {
   Message,
   Segment,
   } from 'semantic-ui-react';
-const nameRegex = RegExp(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/)
 const strongRegex = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/);
 const EmpCodeRegex= RegExp(/^[0-9]*$/)
-
 const formValid= errors=>{
     let valid = true;
     Object.values(errors).forEach(val =>{ val.length > 0 && (valid= false)
@@ -24,35 +27,45 @@ class LoginForm extends React.Component
       super(props);
       this.state=
       {
-         UserID : null,
+        UserID : null,
          Password: null,
          errors:
            {
-              UserID: '',
-              Password: '',
-
-            }
-      };
+              UserIDErr: '',
+              PasswordErr: '',
+           }
+     };
     } 
 
-    handleSubmit = e =>{
-        e.preventDefault();
-        if(this.state.UserID==null)
-        {
-          alert("UserName Can not be Empty")
-        }
-        if(this.state.Password==null)
-        {
-          alert("Password Can not be Empty,Please enter your Password")
-        }
-        else if(formValid(this.state.errors)){
-             alert("Form  has been submited")
-        }
-        else{
-          alert("Please Enter Valid Details to Login your Account")
-        }
+    valid()
+  {
+    let errors = {...this.state.errors}
+     if(this.state.UserID==null)
+    {
+      errors.UserIDErr ='User id Can not be null';
+      this.setState({errors})
+      
     }
+    if(this.state.Password==null)
+    {
+      errors.PasswordErr ='password  Can not be null';
+      this.setState({errors})
+    }
+    else if (this.state.UserID!=null && this.state.Password!=null) {
+      return true
+    }
+    else
+    {return false}
+  }
 
+  handleSubmit = e =>{
+    e.preventDefault();
+    if( this.valid() &&formValid(this.state.errors)){
+          history.push('/MainFormUser')
+    }
+    return false;
+    
+  }
     handleChange = e =>{
         e.preventDefault();
         const {name , value} = e.target;
@@ -60,24 +73,23 @@ class LoginForm extends React.Component
         switch(name)
         {
             case "UserID":
-                errors.UserID =!EmpCodeRegex.test(value) && value.length>0 ?"Invalid UserID":"";
+                errors.UserIDErr =!EmpCodeRegex.test(value) && value.length>0 ?"Invalid UserID":"";
                 break;
             case "Password":
-                errors.Password = !strongRegex.test(value)?" 8 character required and The string must contain at least one special character":"";
+                errors.PasswordErr = !strongRegex.test(value)?" 8 character required and The string must contain at least one special character":"";
                 break;
             default:
             break;
         }
 
         this.setState({errors,[name]:value},()=>console.log(errors))
-      
     }
    render()
    {
      const{errors} = this.state;
      
      return(
-    <Grid centered >
+    <Grid centered columns={4}>
      <Grid.Column>
           <Header as="h2" textAlign="center">
             Login
@@ -95,8 +107,8 @@ class LoginForm extends React.Component
                       onChange={this.handleChange}
                    />
                   
-          {errors.UserID.length>0 &&
-            <Message color="red   ">{errors.UserID}</Message>
+          {errors.UserIDErr.length>0 &&
+            <Message color="red   ">{errors.UserIDErr}</Message>
           }
             Password<Form.Input
               name="Password" 
@@ -108,19 +120,21 @@ class LoginForm extends React.Component
               required
               onChange={this.handleChange}
             />
-            {errors.Password.length>0 &&
-            <Message color="red   ">{errors.Password}</Message>
+            {errors.PasswordErr.length>0 &&
+            <Message color="red   ">{errors.PasswordErr}</Message>
           }
             <Button   fluid size="large" type= "submit" onClick={this.handleSubmit}>
-            Login
-            </Button>
+              Login
+           </Button>
          </Form>
         </Segment>
         <Message>
-         Dont have an account? <b>Register</b>
+         Dont have an account? <Button><Link to="/Register">Register</Link></Button>
         </Message>
       </Grid.Column>
+    
     </Grid>
+    
      );
    }
 }

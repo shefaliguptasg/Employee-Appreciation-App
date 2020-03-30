@@ -7,10 +7,18 @@ import {
   Message,
   Segment,
  } from 'semantic-ui-react';
+ import LoginForm from './LoginForm'
+import { Link } from 'react-router-dom';
+import histroy from './history';
 const nameRegex = RegExp(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/)
 const strongRegex = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/);
 const EmpCodeRegex= RegExp(/^[0-9]*$/)
-
+const formValid= errors=>{
+  let valid = true;
+  Object.values(errors).forEach(val =>{ val.length > 0 && (valid= false)
+  });
+  return valid;
+}
 
 class RegisterForm extends React.Component{
     constructor(props){
@@ -21,31 +29,39 @@ class RegisterForm extends React.Component{
         dept:"",
         password:"",
         confiPaswrd:"",
-        UserNameErr:"",
-        EmpCodeErr:"",
-        deptErr:"",
-        passwordErr:"",
-        confiPaswrdErr:"", 
+        errors:{
+          UserNameErr:"",
+          EmpCodeErr:"",
+          deptErr:"",
+          passwordErr:"",
+          confiPaswrdErr:""}
+        
       };
     }
-    valid()
+    valid() 
     {
+      let errors = {...this.state.errors}
       if(this.state.UserName=="" )
       {
-        this.setState({UserNameErr:"Username name can not be empty"})                    
+        errors.UserNameErr="Username name can not be empty"
+        this.setState({errors})                    
       }
       if(this.state.EmpCode=="")
       {
-        this.setState({EmpCodeErr:"Employee code can not be empty"})
+        errors.EmpCodeErr="Employee code  can not be empty"
+        this.setState({errors})
       }
       if(this.state.dept==""){
-        this.setState({deptErr:"Department can not be empty"})
+        errors.deptErr="dept  can not be empty"
+        this.setState({errors})
       }
       if(this.state.password==""){
-        this.setState({passwordErr:"password can not be empty"})
+        errors.passwordErr="password can not be empty"
+        this.setState({errors})
       }
       if(this.state.confiPaswrd!=this.state.password){
-        this.setState({confiPaswrdErr:"not Matched"})
+        errors.confiPaswrdErr="password  not matched "
+        this.setState({errors})
       }
       else if(this.state.UserName!=""&&this.state.EmpCode!=""&&this.state.dept!=""
       &&this.state.password!=""&&this.state.confiPaswrd!=""){
@@ -56,7 +72,7 @@ class RegisterForm extends React.Component{
     {
       e.preventDefault();
         const {name , value} = e.target;
-        let errors = this.state
+        let errors = this.state.errors
         switch(name)
         {
             case "UserName":
@@ -81,17 +97,20 @@ class RegisterForm extends React.Component{
     }
     submit= e=>
     {
-     //e.preventDefault()
-      if(this.valid())
+     e.preventDefault()
+      if(this.valid()&& formValid(this.state.errors))
       {
-        alert("form has been submitted")
+        //alert("form has been submitted")
+        histroy.push('/')
+        return true
       }
+      return false
     }
      render()
      {
-
-       return( 
-      <Grid centered >
+      const{errors} = this.state
+       return(      
+      <Grid centered columns={4}>
        <Grid.Column>
           <Header as="h2" textAlign="center">
               Register
@@ -106,9 +125,9 @@ class RegisterForm extends React.Component{
                 placeholder="UserName"
                 onChange= {this.handleChange}
               />
-             {this.state.UserNameErr.length > 0 &&
+             {errors.UserNameErr.length > 0 &&
               <Message color="red">
-                {this.state.UserNameErr}
+                {errors.UserNameErr}
               </Message>
               }
               EmployeeCode<Form.Input
@@ -117,9 +136,9 @@ class RegisterForm extends React.Component{
                 type="text"
                 onChange={this.handleChange}
               />
-                {this.state.EmpCodeErr.length > 0 &&
+                {errors.EmpCodeErr.length > 0 &&
               <Message color="red">
-                {this.state.EmpCodeErr}
+                {errors.EmpCodeErr}
               </Message>
                 }
               Department<Form.Input
@@ -127,9 +146,9 @@ class RegisterForm extends React.Component{
                 placeholder="Department"
                 onChange={this.handleChange}
                 />
-                {this.state.deptErr.length > 0 &&
+                {errors.deptErr.length > 0 &&
               <Message color="red">
-                {this.state.deptErr}
+                {errors.deptErr}
               </Message>
                 }
               Password<Form.Input
@@ -141,9 +160,9 @@ class RegisterForm extends React.Component{
                 type="password"
                 onChange={this.handleChange}
               />
-              {this.state.passwordErr.length > 0 &&
+              {errors.passwordErr.length > 0 &&
               <Message color="red">
-                {this.state.passwordErr}
+                {errors.passwordErr}
               </Message>
               }
              confirm Password<Form.Input
@@ -155,13 +174,13 @@ class RegisterForm extends React.Component{
                 type="password"
                 onChange={this.handleChange}
               />
-              {this.state.confiPaswrdErr.length > 0 &&
+              {errors.confiPaswrdErr.length > 0 &&
               <Message color="red">
-                {this.state.confiPaswrdErr}
+                {errors.confiPaswrdErr}
               </Message>
               }
               <Button   fluid size="large" onClick = {this.submit}>
-              Register
+               <Link to ="/LoginForm"> Register</Link>
               </Button>
             </Form>
           </Segment>
