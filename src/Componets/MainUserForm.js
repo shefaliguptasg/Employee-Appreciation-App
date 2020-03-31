@@ -1,12 +1,10 @@
 import React from 'react'
 import th from './th.jpg';
-import { Button,Form,Grid,Header,Divider,Segment,
-    Container, GridColumn, GridRow, Label, } from 'semantic-ui-react';
+import { Button,Grid,Divider,Segment,
+    Container, GridColumn,Label,Input } from 'semantic-ui-react';
 import Search  from './SearchComponent'
 import UserList from './UserList'
    
- const totalCoins=['20','30','40']
-
 class MainForm extends React.Component{
     constructor(props){
         super(props);
@@ -94,12 +92,12 @@ return(
                 <Grid.Row>
                     <Grid columns={2}>
                         <GridColumn>
-                            <Label> User Name</Label>:- {filterMainUser.map(x =>(x.Username))}<br/>
-                       <br/><Label> EmployeeCode</Label>:- {filterMainUser.map(x =>(x.EmployeeCode))} <br/>
+                            <Label> User Name</Label><Input>{filterMainUser.map(x =>(x.Username))}</Input><br/>
+                       <br/><Label> EmployeeCode</Label><Input> {filterMainUser.map(x =>(x.EmployeeCode))}</Input> <br/>
                         </GridColumn>
                         <GridColumn>
-                            <Label> Department</Label>:- {filterMainUser.map(x =>(x.Department))}<br/>
-                            <br/><Label>Coins</Label> {filterMainUser.map(x =>(x.TotalRecieveCoin))}
+                            <Label> Department</Label><Input>{filterMainUser.map(x =>(x.Department))}</Input><br/>
+                            <br/><Label>Coins</Label><Input>{filterMainUser.map(x =>(x.TotalRecieveCoin))}</Input>
                         </GridColumn>
                     </Grid>
                 </Grid.Row>

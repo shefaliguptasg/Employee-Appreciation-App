@@ -1,11 +1,9 @@
 import React from 'react'
 import {
-    Button,Grid,Header, GridColumn, GridRow,
+    Button,Grid,Header, GridColumn, GridRow, Label,
     } from 'semantic-ui-react';
-import MainForm from './MainUserForm'
 import TransferCoin from './Transfer';
-import LoginForm from './LoginForm';
-import { Link, Router } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 class UserList  extends React.Component
@@ -24,9 +22,9 @@ class UserList  extends React.Component
                 <Header as='h3' color="orange"><i>other users coin</i></Header>
                 <Grid columns={4} >
                         <GridRow>
-                            <GridColumn><h5>user</h5> </GridColumn>
-                            <GridColumn><h5>RecievedCoins</h5> </GridColumn>
-                            <GridColumn><h5>AddCoins</h5> </GridColumn>
+                            <GridColumn><Label>user</Label> </GridColumn>
+                            <GridColumn><Label>RecievedCoins</Label> </GridColumn>
+                            <GridColumn><Label>AddCoins</Label> </GridColumn>
                         </GridRow>
                 </Grid>
                 <Grid columns={4}>
