@@ -8,36 +8,60 @@ import UserList from './UserList'
  const totalCoins=['20','30','40']
 
 class MainForm extends React.Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state={
             userlist: [{
                 id:'101',
                 Username:'shefali gupta',
                 EmployeeCode:'1198',
                 Department:'FAS',
-                RecieveCoin:'70'
+                TotalRecieveCoin:'70',
+                coinsDetails:[{
+                    id:'101',
+                    SenderName:'AkshitaSharma',
+                    coins:'2',
+                    comment:'she helps how to import data from api'
+                },
+                {
+                    id:'1001',
+                    SenderName:'AkshitaSharma',
+                    coins:'2',
+                    comment:'she helps how to import data from api'
+                },
+                {
+                    id:'1002',
+                    SenderName:'AkshitaSharma',
+                    coins:'2',
+                    comment:'she helps how to import data from api'
+                },{
+                    id:'1003',
+                    SenderName:'AkshitaSharma',
+                    coins:'2',
+                    comment:'she helps how to import data from api'
+                }
+                     ]
             },
             {
-                id:'102',
+                id:'1004',
                 Username:'Akshita gupta',
                 EmployeeCode:'1190',
                 Department:'FAS',
-                RecieveCoin:'60'
+                TotalRecieveCoin:'60'
             },
             {
                 id:'102',
                 Username:'kunal kumar',
                 EmployeeCode:'1195',
                 Department:'FAS',
-                RecieveCoin:'60'
+                TotalRecieveCoin:'60'
             },
             {
-                id:'102',
+                id:'104',
                 Username:'kunal kumar',
                 EmployeeCode:'1197',
                 Department:'FAS',
-                RecieveCoin:'60'
+                TotalRecieveCoin:'60'
             }
             ],
             OtherUsers:''
@@ -45,8 +69,10 @@ class MainForm extends React.Component{
 
     }
     handlUser = e=>{
+
         console.log(e.target.va)
         this.setState({OtherUsers:e.target.value})
+        console(`hello${this.state.OtherUsers}`)
     }
     render(){
         let userid ='1190';
@@ -58,17 +84,27 @@ return(
 <Container>
     <Search handlUser={this.handlUser}/>
     <Segment placeholder>
-        <Grid columns={2}>
+        <Grid centered columns={2}>
             <UserList list={filterUsers}/>
             <Grid.Column verticalAlign='top'>
                 <Grid.Row>
                     <Button content='Sign out' icon='signup' size='small' />
                     <img src={th} width='100px'/>
-                    </Grid.Row>
+                </Grid.Row>
                 <Grid.Row>
-                    <Label> User Name</Label>:- shefali<br/>
-                <br/><Label> EmployeeCode</Label>:- 1190 <br/>
-                <br/><Label> Department</Label>:- FAS
+                    <Grid columns={2}>
+                        <GridColumn>
+                            <Label> User Name</Label>:- {filterMainUser.map(x =>(x.Username))}<br/>
+                       <br/><Label> EmployeeCode</Label>:- {filterMainUser.map(x =>(x.EmployeeCode))} <br/>
+                        </GridColumn>
+                        <GridColumn>
+                            <Label> Department</Label>:- {filterMainUser.map(x =>(x.Department))}<br/>
+                            <br/><Label>Coins</Label> {filterMainUser.map(x =>(x.TotalRecieveCoin))}
+                        </GridColumn>
+                    </Grid>
+                </Grid.Row>
+                <Grid.Row>
+                    
                 </Grid.Row>
             </Grid.Column>
             

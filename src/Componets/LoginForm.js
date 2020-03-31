@@ -1,7 +1,5 @@
 import React from 'react';
-import{Router, Route, Link, browserHistory, IndexRoute}    from 'react-router-dom'
-import MainUserForm from './MainUserForm';
-import RegisterForm from './RegisterForm' ;
+import{ Link}    from 'react-router-dom'
 import history from './history';
 
 import {
@@ -126,6 +124,7 @@ class LoginForm extends React.Component
             <Button   fluid size="large" type= "submit" onClick={this.handleSubmit}>
               Login
            </Button>
+          
          </Form>
         </Segment>
         <Message>

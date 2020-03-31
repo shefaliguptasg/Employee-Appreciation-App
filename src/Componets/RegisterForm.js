@@ -7,7 +7,6 @@ import {
   Message,
   Segment,
  } from 'semantic-ui-react';
- import LoginForm from './LoginForm'
 import { Link } from 'react-router-dom';
 import histroy from './history';
 const nameRegex = RegExp(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/)
@@ -41,30 +40,30 @@ class RegisterForm extends React.Component{
     valid() 
     {
       let errors = {...this.state.errors}
-      if(this.state.UserName=="" )
+      if(this.state.UserName==="" )
       {
         errors.UserNameErr="Username name can not be empty"
         this.setState({errors})                    
       }
-      if(this.state.EmpCode=="")
+      if(this.state.EmpCode==="")
       {
         errors.EmpCodeErr="Employee code  can not be empty"
         this.setState({errors})
       }
-      if(this.state.dept==""){
+      if(this.state.dept===""){
         errors.deptErr="dept  can not be empty"
         this.setState({errors})
       }
-      if(this.state.password==""){
+      if(this.state.password===""){
         errors.passwordErr="password can not be empty"
         this.setState({errors})
       }
-      if(this.state.confiPaswrd!=this.state.password){
+      if(this.state.confiPaswrd!==this.state.password){
         errors.confiPaswrdErr="password  not matched "
         this.setState({errors})
       }
-      else if(this.state.UserName!=""&&this.state.EmpCode!=""&&this.state.dept!=""
-      &&this.state.password!=""&&this.state.confiPaswrd!=""){
+      else if(this.state.UserName!==""&&this.state.EmpCode!==""&&this.state.dept!==""
+      &&this.state.password!==""&&this.state.confiPaswrd!==""){
         return true
       }
     }

@@ -6,14 +6,18 @@ import LoginForm from './Componets/LoginForm';
 import RegisterForm from './Componets/RegisterForm';
 import MainUserForm from './Componets/MainUserForm';
 import history from './Componets/history'
+import UserDetails from './Componets/UsersDetails';
+import MainForm from './Componets/MainUserForm';
 
 export default function App() {
   return (
     <Router history={history}>
     <Switch>
       <Route exact path="/" component={LoginForm} />
-      <Route Path ="/MainFormUser"component={MainUserForm}/>
-      {/* <Route Path ="/Register"component={RegisterForm}/>    */}
+      <Route  exact path ="/MainFormUser" component={MainForm}/>
+      {/* <Route exact Path ="/Register"component={RegisterForm}/>   */}
+      <Route exact Path ="/MainFormUser/:id"component={UserDetails}/> 
+       
     </Switch>
     </Router>
   )
